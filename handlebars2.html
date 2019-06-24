@@ -1,0 +1,24 @@
+<html>
+<head>
+    <title>Handlebars</title>
+    <script src="./handlebars-v4.1.2.js"></script>
+</head>
+<body>
+    <div id="toDisplay"></div>
+</body>
+<script id="quotes-template" type="text/x-handlebars-template">
+<h3>Favoite {{name}} Quotes</h3>
+<ol>
+   {{#each quotes}}
+   <li>{{quote}}
+     {{/each}}
+        
+</ol>
+</script>
+<script type="text/javascript">
+var quoteInfo = document.getElementById("quotes-template").innerHTML
+var template = Handlebars.compile(quoteInfo);
+var quoteData = template({name:"test" , quotes:[{quote:"Can you see this or not please le ascsdcsc"},{quote:"Can you see this or not please le ascsdcsc"},{quote:"Can you see this or not please le ascsdcsc"}]})
+document.getElementById('toDisplay').innerHTML += quoteData
+</script>
+</html>
