@@ -14,11 +14,47 @@
      {{/each}}
         
 </ol>
+{{{bio}}}<br/>
+{{madeLink "This is the link to google" "www.google.com"}}<br/>
+{{changeColor "This is the color helper function" color="red"}}<br/>
+{{sayHello}}
 </script>
 <script type="text/javascript">
+
 var quoteInfo = document.getElementById("quotes-template").innerHTML
 var template = Handlebars.compile(quoteInfo);
-var quoteData = template({name:"test" , quotes:[{quote:"Can you see this or not please le ascsdcsc"},{quote:"Can you see this or not please le ascsdcsc"},{quote:"Can you see this or not please le ascsdcsc"}]})
+Handlebars.registerHelper("madeLink",function(text,url){
+text=Handlebars.Utils.escapeExpression(text);
+url = Handlebars.Utils.escapeExpression(url);
+var theLink = '<a href="'+url +'">'+text+'</a>'
+return new Handlebars.SafeString(theLink);
+})
+Handlebars.registerHelper("sayHello",function(option){
+    switch(option.data.lang){
+        case "spanish":
+          return "Hola"
+           break;
+        case "french":
+          return "Bonjour"
+           break; 
+         default:
+         return "Hello";   
+    }
+});
+Handlebars.registerHelper("changeColor",function(text,option){
+    text = Handlebars.Utils.escapeExpression(text);
+
+    console.log(option,'option')
+    if(option.hash.color === 'red'){
+        return new Handlebars.SafeString("<span style='color:red'>"+text+"</span>");
+
+    }
+    else{
+        return new Handlebars.SafeString('<span style="color:blue">'+text+'</span>');
+        
+    }
+})
+var quoteData = template({name:"test" , quotes:[{quote:"Can you see this or not please le ascsdcsc"},{quote:"Can you see this or not please le ascsdcsc"},{quote:"Can you see this or not please le ascsdcsc"}],bio:'<i>This is a itallic bio that i am displaying</i>'},{data:{lang:'french'}})
 document.getElementById('toDisplay').innerHTML += quoteData
 </script>
 </html>

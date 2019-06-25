@@ -1,0 +1,59 @@
+<html>
+<head>
+    <title>Handlebars</title>
+    <script src="./handlebars-v4.1.2.js"></script>
+</head>
+<body>
+    <div id="toDisplay"></div>
+</body>
+<script id="barsScript" type="text/x-handlebars-template">
+    {{#makeRadio "size"}}
+      Small
+      Medium
+      Large  
+    {{/makeRadio}}<br/>
+    {{#areEqual 1 3}}
+    Numbers are Equal
+    {{else}}
+    Numbers are not Equal
+    {{/areEqual}}<br/>
+
+    {{#if 'isActive'}}
+    activeveeeee
+    {{else}}
+    not activeveeeee
+    {{/if}}
+</script>
+<script type="text/javascript">
+var handlebarsScript = document.getElementById('barsScript').innerHTML;
+var template = Handlebars.compile(handlebarsScript);
+
+Handlebars.registerHelper("makeRadio",function(name,options){
+var radioList = options.fn();
+radioList = radioList.trim().split("\n");
+var output = "";
+for (var val in radioList){
+    var item = radioList[val].trim();
+    output += '<input type="radio" name="'+name+'"value="'+item+'">'+item+'<br/>';
+}
+return output;
+})
+Handlebars.registerHelper("areEqual",function(num1,num2,options){
+   if(num1 == num2){
+       return options.fn(this)
+   } else{
+       return options.inverse(this)
+   }
+})
+Handlebars.registerHelper("if",function(data,options){
+if(data == 'isActive'){
+    return options.fn(this);
+}else{
+    return options.inverse(this);
+}
+})
+var templateData = template({});
+document.getElementById("toDisplay").innerHTML+=templateData;
+Handlebars.registerHelper()
+</script>
+</html>
