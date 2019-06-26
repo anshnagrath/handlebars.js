@@ -1,0 +1,61 @@
+<html>
+<head>
+    <title>Handlebars</title>
+    <script src="./handlebars-v4.1.2.js"></script>
+</head>
+<body>
+    <div id="toDisplay"></div>
+</body>
+<script id="barsScript" type="text/x-handlebars-template">
+<div>
+ <h3>{{title}}</h3> 
+ {{#with techData}}
+ <p>{{isbn}}</p>
+ <br>
+ <p>{{author}}</p>
+ {{/with}}  
+ {{>myName}}
+
+
+<h2>Suggestions</h2>
+{{#each comments}}
+{{>askQuestion tagName="h3"}}
+{{/each}}
+</div>
+
+
+</div>
+</script>
+<script type="text/javascript">
+
+var barsScript = document.getElementById("barsScript").innerHTML
+Handlebars.registerHelper('with',function(context,option){
+return option.fn(context)
+})
+Handlebars.registerPartial("myName",'{{name}}');
+Handlebars.registerPartial("askQuestion",'<{{tagName}}>{{author}}</{{tagName}}>'+'<div>{{comment}}</div>')
+//compiling the handel bars script
+
+var template = Handlebars.compile(barsScript);
+var templateData =template({
+    name:'ansh',
+    title:"Harry pooter and the philosopher's stone",
+    techData:{
+        isbn:"embedded stuff",
+        author:"J.k rouwling"
+    },
+    comments:[{
+      author:"test if this thing works",
+      comment:"yeah it do"  
+    },{
+      author:"We have a comment",
+      comment:"yes we do have one"  
+    },{
+      author:"are you sure",
+      comment:"yes i am"  
+    }
+]
+});
+document.getElementById('toDisplay').innerHTML += templateData
+</script>
+</html>
